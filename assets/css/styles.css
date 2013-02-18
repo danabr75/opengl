@@ -79,7 +79,7 @@ nav {
   padding: 2px 8px 0;
 }
 
-#nav li:hover {
+#nav li:hover, #logo:hover {
   background-color: #222;
   color: #999;
 }

@@ -14,25 +14,25 @@ h3. General
 * mkrf 0.2.3+
 * rubygems 0.9.1+
 * OpenGL headers for OpenGL version 1.1 or later (not needed for binary install on Windows)
-* GLUT 3.7+ or API-compatible implementation (freeglut,OpenGLUT)
+* GLUT 3.7+ or API-compatible implementation (freeglut, OpenGLUT)
 
 h3. Linux
 
 On Ubuntu or Debian systems, aside from Ruby you'll need ruby and
 some extra ruby related packages:
 
-* `ruby rdoc ri ruby1.8-dev`
+* @ruby@ @rdoc@ @ri@ @ruby1.8-dev@
 
 For OpenGL related headers you'll need the following packages:
 
-* `libgl1-mesa-dri libglu1-mesa freeglut3`
-* `libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev`
+* @libgl1-mesa-dri@ @libglu1-mesa@ @freeglut3@
+* @libgl1-mesa-dev@ @libglu1-mesa-dev@ @freeglut3-dev@
 
 On older Gentoo, Debian and Ubuntu, rubygems 0.9.0 will be installed by default
-in the packages.  This version of rubygems is INCOMPATIBLE with opengl.
+in the packages.  This version of rubygems is *incompatible* with opengl.
 You'll need to install rubygems 0.9.1+ from source.
 
-On some distributions you may need 'xorg-dev' developer package.
+On some distributions you may need @xorg-dev@ developer package.
 
 h3. Mac OS X
 
@@ -64,7 +64,7 @@ h2. Build and installation
 h3. Installing from rubygems
 
 opengl should support being installed via gems now.  Just
-try 'gem install -y opengl' and it should pull down the gem
+try @gem install -y opengl@ and it should pull down the gem
 and try to build the bindings for you automatically.
 
 For windows there is also pre-built binary windows gem available
@@ -104,7 +104,7 @@ $ rake test
 {% endhighlight %}
 
 Note that the tests have the adverse effect of testing the underlying OpenGL
-implementation, so depending on your GL provider,drivers or OS, the tests may
+implementation, so depending on your GL provider, drivers or OS, the tests may
 fail, crash, or not run at all, without affecting your ability to use the
 bindings.
 

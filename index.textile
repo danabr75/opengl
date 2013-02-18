@@ -65,5 +65,5 @@ or with custom versions:
 rake cross native gem RUBY_CC_VERSION=1.9.3 LIBFREEGLUT_VERSION=2.8.0
 {% endhighlight %}
 
-If everything works, there should be ruby-opengl-VERSION-x86-mingw32.gem in the pkg
+If everything works, there should be a @ruby-opengl-VERSION-x86-mingw32.gem@ in the pkg
 directory.
