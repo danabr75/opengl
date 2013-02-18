@@ -2,6 +2,7 @@ permalink:  /blog/:year/:month/:day/:title
 pygments:   true
 lsi: false
 safe: true
+auto: true
 
 redcloth:
   hard_breaks: false
