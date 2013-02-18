@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <title>OpenGL</title>
 
-    <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
-    <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
-    <link href="/stylesheets/syntax.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,900italic" rel="stylesheet" type="text/css">
+    <link href="/assets/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/syntax.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
   </head>
   <body>
@@ -16,7 +17,7 @@
           <div id="logo"><a href="/">OpenGL</a></div>
           <nav>
             <ul id="nav" class="clearfix">
-              <li id="nav-home"><a href="/">Home</a></li>
+              <li id="nav-install"><a href="/install.html">Install</a></li>
               <li id="nav-blog"><a href="/blog/">Blog</a></li>
               <li id="nav-documentation"><a href="/documentation/">Documentation</a></li>
               <li id="nav-tutorial"><a href="/tutorial.html">Tutorial</a></li>
@@ -61,7 +62,7 @@ For Debian/Ubuntu it is <tt>apt-get install gcc-mingw-w64</tt> .</p>
 <div class="highlight"><pre><code class="sh">rake cross native gem
 </code></pre></div><p>or with custom versions:</p>
 <div class="highlight"><pre><code class="sh">rake cross native gem <span class="nv">RUBY_CC_VERSION</span><span class="o">=</span>1.9.3 <span class="nv">LIBFREEGLUT_VERSION</span><span class="o">=</span>2.8.0
-</code></pre></div><p>If everything works, there should be ruby-opengl-<span class="caps">VERSION</span>-x86-mingw32.gem in the pkg
+</code></pre></div><p>If everything works, there should be a <code>ruby-opengl-VERSION-x86-mingw32.gem</code> in the pkg
 directory.</p>
 
       </div>

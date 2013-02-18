@@ -12,59 +12,55 @@ h3. General
 * ruby 1.9.2+
 * rake
 * mkrf 0.2.3+
-* rubygems 0.9.1+
 * OpenGL headers for OpenGL version 1.1 or later (not needed for binary install on Windows)
 * GLUT 3.7+ or API-compatible implementation (freeglut, OpenGLUT)
 
+The main goal is having ruby installed and being capable of compiling
+native C extensions for ruby (ruby-dev), as well as having the required
+OpenGL libraries.
+
 h3. Linux
 
-On Ubuntu or Debian systems, aside from Ruby you'll need ruby and
-some extra ruby related packages:
-
-* @ruby@ @rdoc@ @ri@ @ruby1.8-dev@
+On Ubuntu or Debian systems, aside from Ruby you'll need the 'developer' package
+@ruby1.9-dev@, which supports compiling C extensions for ruby.
 
 For OpenGL related headers you'll need the following packages:
 
 * @libgl1-mesa-dri@ @libglu1-mesa@ @freeglut3@
 * @libgl1-mesa-dev@ @libglu1-mesa-dev@ @freeglut3-dev@
 
-On older Gentoo, Debian and Ubuntu, rubygems 0.9.0 will be installed by default
-in the packages.  This version of rubygems is *incompatible* with opengl.
-You'll need to install rubygems 0.9.1+ from source.
+On some distributions you may need the @xorg-dev@ developer package.
 
-On some distributions you may need @xorg-dev@ developer package.
+h4. ArchLinux
+
+{% highlight sh %}
+$ pacman -S mesa glu freeglut
+{% endhighlight %}
 
 h3. Mac OS X
 
 On OS X, you will need to install your own version of Ruby as the
 version that ships with OS X has known problems with properly building
-ruby-opengl bindings.  You'll also need XCode for gcc and tools.  Macports
-or fink should handle this cleanly.
-
-* To compile under Mac OS X you MUST install your own version of Ruby
-  as the version included with Tiger (1.8.2) has a broken rbconfig
-  and will fail to build the project properly.  Try either "MacPorts":http://www.macports.org/,
-  "Fink":http://finkproject.org/, or "building your own from source":http://www.ruby-lang.org/en/downloads/.
+ruby-opengl bindings.  You'll also need XCode for gcc and tools.
 
 h3. Windows
 
 For manual build on Windows you need to have platform SDK and compiler that *must* match the one which was used for compiling ruby binary (for One-click ruby installer it is MSVC 6.0).
-You may also need @glut.h@ in SDK include directory, as the One-click ruby
+
+If ruby was installed via the one-click installer, the "DevKit":http://rubyinstaller.org/add-ons/devkit/
+is also needed (for compiling native C extensions).
+
+You may also need @glut.h@ in SDK include directory, as the one-click ruby
 installer is missing it. You can copy the file from glut package at "glut homepage":http://www.xmission.com/~nate/glut.html.
-Alternatively, you can install the precompiled binary gem (see bellow).
-
-*Important note:* If you are using the One-click installer version 1.8.6-25 or earlier,
-you must delete or rename files @opengl.so@ and @glut.so@ in
-@C:/ruby/lib/ruby/site_ruby/1.8/i386-msvcrt@
-
+Alternatively, you can install the precompiled binary gem (see below).
 
 h2. Build and installation
 
 
-h3. Installing from rubygems
+h3. Installing as a gem
 
-opengl should support being installed via gems now.  Just
-try @gem install -y opengl@ and it should pull down the gem
+opengl should support being installed via gems now.  Just do 
+@gem install opengl@ and it should pull down the gem
 and try to build the bindings for you automatically.
 
 For windows there is also pre-built binary windows gem available
@@ -74,26 +70,26 @@ compiler or other mentioned tools installed.
 h3. Manual Build instructions for all platforms (see above for platform-specific notes)
 
 # Make sure you have working ruby with rubygems installed
-   and (if needed) appropriate developer packages (ruby-dev, ruby1.8-dev, ...).
-# Make sure you have working C compiler
-# Install rake either from package or by running 'gem install rake'
-# Install mkrf (0.2.0+) either from package or by running 'gem install mkrf'
-# Make sure you have working OpenGL installation, this includes libGL,libGLU,
+   and (if needed) appropriate developer packages (ruby-dev, ruby1.9-dev, ...)
+# Make sure you have a working C compiler
+# Install rake  by running @gem install rake@
+# Install mkrf (0.2.3+) by running @gem install mkrf@
+# Make sure you have working OpenGL installation, this includes libGL, libGLU,
    glut and (if needed) appropriate -dev or -devel packages.
-# Run @rake@ at the top level of the project
+# Run @rake@ in the root directory of the project
 # (OPTIONAL) Run @rake test@ to run unit tests to verify it works properly
 
 h3. Installing manually built extensions
 
-# Run @rake clean@ to clean out the project
-# Run @rake gem@ to create source gem from project
-# Run @gem install pkg/ruby-opengl-(version).gem@ to compile and install the gem
+# @rake clean@ to clean out the project
+# @rake gem@ to create source gem from project
+# @gem install pkg/ruby-opengl-(version).gem@ to compile and install the gem
 # Done.
 
 h3. Building binary gem (useful only for binary distribution of the project)
 
 # Run @rake binary_gem@
-# Binary gem will be generated in pkg/ directory
+# Binary gem will be generated in *pkg/* directory
 
 h3. Testing
 

@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <title>OpenGL</title>
 
-    <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
-    <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
-    <link href="/stylesheets/syntax.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,900italic" rel="stylesheet" type="text/css">
+    <link href="/assets/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/syntax.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
   </head>
   <body>
@@ -16,7 +17,7 @@
           <div id="logo"><a href="/">OpenGL</a></div>
           <nav>
             <ul id="nav" class="clearfix">
-              <li id="nav-home"><a href="/">Home</a></li>
+              <li id="nav-install"><a href="/install.html">Install</a></li>
               <li id="nav-blog"><a href="/blog/">Blog</a></li>
               <li id="nav-documentation"><a href="/documentation/">Documentation</a></li>
               <li id="nav-tutorial"><a href="/tutorial.html">Tutorial</a></li>
@@ -37,48 +38,38 @@
 	<li>ruby 1.9.2+</li>
 	<li>rake</li>
 	<li>mkrf 0.2.3+</li>
-	<li>rubygems 0.9.1+</li>
 	<li>OpenGL headers for OpenGL version 1.1 or later (not needed for binary install on Windows)</li>
-	<li><span class="caps">GLUT</span> 3.7+ or <span class="caps">API</span>-compatible implementation (freeglut,OpenGLUT)</li>
+	<li><span class="caps">GLUT</span> 3.7+ or <span class="caps">API</span>-compatible implementation (freeglut, OpenGLUT)</li>
 </ul>
+<p>The main goal is having ruby installed and being capable of compiling
+native C extensions for ruby (ruby-dev), as well as having the required
+OpenGL libraries.</p>
 <h3>Linux</h3>
-<p>On Ubuntu or Debian systems, aside from Ruby you&#8217;ll need ruby and
-some extra ruby related packages:</p>
-<ul>
-	<li>`ruby rdoc ri ruby1.8-dev`</li>
-</ul>
+<p>On Ubuntu or Debian systems, aside from Ruby you&#8217;ll need the &#8216;developer&#8217; package
+<code>ruby1.9-dev</code>, which supports compiling C extensions for ruby.</p>
 <p>For OpenGL related headers you&#8217;ll need the following packages:</p>
 <ul>
-	<li>`libgl1-mesa-dri libglu1-mesa freeglut3`</li>
-	<li>`libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev`</li>
+	<li><code>libgl1-mesa-dri</code> <code>libglu1-mesa</code> <code>freeglut3</code></li>
+	<li><code>libgl1-mesa-dev</code> <code>libglu1-mesa-dev</code> <code>freeglut3-dev</code></li>
 </ul>
-<p>On older Gentoo, Debian and Ubuntu, rubygems 0.9.0 will be installed by default
-in the packages.  This version of rubygems is <span class="caps">INCOMPATIBLE</span> with opengl.
-You&#8217;ll need to install rubygems 0.9.1+ from source.</p>
-<p>On some distributions you may need &#8216;xorg-dev&#8217; developer package.</p>
-<h3>Mac OS X</h3>
+<p>On some distributions you may need the <code>xorg-dev</code> developer package.</p>
+<h4>ArchLinux</h4>
+<div class="highlight"><pre><code class="sh"><span class="nv">$ </span>pacman -S mesa glu freeglut
+</code></pre></div><h3>Mac OS X</h3>
 <p>On OS X, you will need to install your own version of Ruby as the
 version that ships with OS X has known problems with properly building
-ruby-opengl bindings.  You&#8217;ll also need XCode for gcc and tools.  Macports
-or fink should handle this cleanly.</p>
-<ul>
-	<li>To compile under Mac OS X you <span class="caps">MUST</span> install your own version of Ruby
-  as the version included with Tiger (1.8.2) has a broken rbconfig
-  and will fail to build the project properly.  Try either <a href="http://www.macports.org/">MacPorts</a>,
-  <a href="http://finkproject.org/">Fink</a>, or <a href="http://www.ruby-lang.org/en/downloads/">building your own from source</a>.</li>
-</ul>
+ruby-opengl bindings.  You&#8217;ll also need XCode for gcc and tools.</p>
 <h3>Windows</h3>
-<p>For manual build on Windows you need to have platform <span class="caps">SDK</span> and compiler that <strong>must</strong> match the one which was used for compiling ruby binary (for One-click ruby installer it is <span class="caps">MSVC</span> 6.0).
-You may also need <code>glut.h</code> in <span class="caps">SDK</span> include directory, as the One-click ruby
+<p>For manual build on Windows you need to have platform <span class="caps">SDK</span> and compiler that <strong>must</strong> match the one which was used for compiling ruby binary (for One-click ruby installer it is <span class="caps">MSVC</span> 6.0).</p>
+<p>If ruby was installed via the one-click installer, the <a href="http://rubyinstaller.org/add-ons/devkit/">DevKit</a>
+is also needed (for compiling native C extensions).</p>
+<p>You may also need <code>glut.h</code> in <span class="caps">SDK</span> include directory, as the one-click ruby
 installer is missing it. You can copy the file from glut package at <a href="http://www.xmission.com/~nate/glut.html">glut homepage</a>.
-Alternatively, you can install the precompiled binary gem (see bellow).</p>
-<p><strong>Important note:</strong> If you are using the One-click installer version 1.8.6-25 or earlier,
-you must delete or rename files <code>opengl.so</code> and <code>glut.so</code> in
-<code>C:/ruby/lib/ruby/site_ruby/1.8/i386-msvcrt</code></p>
+Alternatively, you can install the precompiled binary gem (see below).</p>
 <h2>Build and installation</h2>
-<h3>Installing from rubygems</h3>
-<p>opengl should support being installed via gems now.  Just
-try &#8216;gem install -y opengl&#8217; and it should pull down the gem
+<h3>Installing as a gem</h3>
+<p>opengl should support being installed via gems now.  Just do 
+<code>gem install opengl</code> and it should pull down the gem
 and try to build the bindings for you automatically.</p>
 <p>For windows there is also pre-built binary windows gem available
 (i386-mswin32) which is compatible with the ruby one-click installer and does not need
@@ -86,32 +77,32 @@ compiler or other mentioned tools installed.</p>
 <h3>Manual Build instructions for all platforms (see above for platform-specific notes)</h3>
 <ol>
 	<li>Make sure you have working ruby with rubygems installed
-   and (if needed) appropriate developer packages (ruby-dev, ruby1.8-dev, &#8230;).</li>
-	<li>Make sure you have working C compiler</li>
-	<li>Install rake either from package or by running &#8216;gem install rake&#8217;</li>
-	<li>Install mkrf (0.2.0+) either from package or by running &#8216;gem install mkrf&#8217;</li>
-	<li>Make sure you have working OpenGL installation, this includes libGL,libGLU,
+   and (if needed) appropriate developer packages (ruby-dev, ruby1.9-dev, &#8230;)</li>
+	<li>Make sure you have a working C compiler</li>
+	<li>Install rake  by running <code>gem install rake</code></li>
+	<li>Install mkrf (0.2.3+) by running <code>gem install mkrf</code></li>
+	<li>Make sure you have working OpenGL installation, this includes libGL, libGLU,
    glut and (if needed) appropriate -dev or -devel packages.</li>
-	<li>Run <code>rake</code> at the top level of the project</li>
+	<li>Run <code>rake</code> in the root directory of the project</li>
 	<li>(<span class="caps">OPTIONAL</span>) Run <code>rake test</code> to run unit tests to verify it works properly</li>
 </ol>
 <h3>Installing manually built extensions</h3>
 <ol>
-	<li>Run <code>rake clean</code> to clean out the project</li>
-	<li>Run <code>rake gem</code> to create source gem from project</li>
-	<li>Run <code>gem install pkg/ruby-opengl-(version).gem</code> to compile and install the gem</li>
+	<li><code>rake clean</code> to clean out the project</li>
+	<li><code>rake gem</code> to create source gem from project</li>
+	<li><code>gem install pkg/ruby-opengl-(version).gem</code> to compile and install the gem</li>
 	<li>Done.</li>
 </ol>
 <h3>Building binary gem (useful only for binary distribution of the project)</h3>
 <ol>
 	<li>Run <code>rake binary_gem</code></li>
-	<li>Binary gem will be generated in pkg/ directory</li>
+	<li>Binary gem will be generated in <strong>pkg/</strong> directory</li>
 </ol>
 <h3>Testing</h3>
 <p>To run unit tests:</p>
 <div class="highlight"><pre><code class="sh"><span class="nv">$ </span>rake <span class="nb">test</span>
 </code></pre></div><p>Note that the tests have the adverse effect of testing the underlying OpenGL
-implementation, so depending on your GL provider,drivers or OS, the tests may
+implementation, so depending on your GL provider, drivers or OS, the tests may
 fail, crash, or not run at all, without affecting your ability to use the
 bindings.</p>
 <h3>Running programs and examples</h3>

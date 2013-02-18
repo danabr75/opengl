@@ -125,7 +125,7 @@ vertex = [ 1, 1, 1 ]
 glVertex3fv( vertex )
 {% endhighlight %}
 
-For functions with multiple parameter-number variations (glVertex,glColor,...)
+For functions with multiple parameter-number variations (glVertex, glColor...)
 we define 'overloaded' functions, as in:
 
 {% highlight ruby %}

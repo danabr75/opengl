@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <title>OpenGL</title>
 
-    <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
-    <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
-    <link href="/stylesheets/syntax.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,900italic" rel="stylesheet" type="text/css">
+    <link href="/assets/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/syntax.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
   </head>
   <body>
@@ -16,7 +17,7 @@
           <div id="logo"><a href="/">OpenGL</a></div>
           <nav>
             <ul id="nav" class="clearfix">
-              <li id="nav-home"><a href="/">Home</a></li>
+              <li id="nav-install"><a href="/install.html">Install</a></li>
               <li id="nav-blog"><a href="/blog/">Blog</a></li>
               <li id="nav-documentation"><a href="/documentation/">Documentation</a></li>
               <li id="nav-tutorial"><a href="/tutorial.html">Tutorial</a></li>
@@ -63,9 +64,9 @@ documentation and manuals for Ruby.</p>
 <h2 id="naming_conventions">Naming conventions</h2>
 <p>The bindings contains three modules:</p>
 <ul>
-	<li>&#8216;Gl&#8217; &#8211; OpenGL functions itself</li>
-	<li>&#8216;Glu&#8217; &#8211; OpenGL Utility Library <span class="caps">API</span> &#8211; higher-level drawing routines, <span class="caps">NURBS</span> etc.</li>
-	<li>&#8216;Glut&#8217; &#8211; OpenGL Utility Toolkit &#8211; low level functions such as creating OpenGL
+	<li><code>Gl</code> &#8211; OpenGL functions itself</li>
+	<li><code>Glu</code> &#8211; OpenGL Utility Library <span class="caps">API</span> &#8211; higher-level drawing routines, <span class="caps">NURBS</span> etc.</li>
+	<li><code>Glut</code> &#8211; OpenGL Utility Toolkit &#8211; low level functions such as creating OpenGL
   context, opening window or handling user input</li>
 </ul>
 <p>You can import all three modules by calling</p>
@@ -82,7 +83,7 @@ documentation and manuals for Ruby.</p>
 <span class="no">Glut</span><span class="o">.</span><span class="n">glutFooBar</span><span class="p">(</span> <span class="ss">Glut</span><span class="p">:</span><span class="ss">:GLUT_FOO_BAR</span> <span class="p">)</span>
 </code></pre></div><p>This is the &#8216;full&#8217; syntax, useful when you are expecting name clashes
 with other modules, or just want to be formal ;) More often, you will
-want to use the &#8216;C-style&#8217; syntax, which you can accomplish by using &#8216;include&#8217;
+want to use the &#8216;C-style&#8217; syntax, which you can accomplish by using <code>include</code>
 to export the module functions and constants to global namespace:</p>
 <div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;opengl&#39;</span>
 <span class="kp">include</span> <span class="no">Gl</span><span class="p">,</span><span class="no">Glu</span><span class="p">,</span><span class="no">Glut</span>
@@ -116,7 +117,7 @@ automatic parameter conversion to required type if possible. Example:</p>
 </code></pre></div><p>Arrays are passed/received as Ruby arrays:</p>
 <div class="highlight"><pre><code class="ruby"><span class="n">vertex</span> <span class="o">=</span> <span class="o">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">]</span>
 <span class="n">glVertex3fv</span><span class="p">(</span> <span class="n">vertex</span> <span class="p">)</span>
-</code></pre></div><p>For functions with multiple parameter-number variations (glVertex,glColor,&#8230;)
+</code></pre></div><p>For functions with multiple parameter-number variations (glVertex, glColor&#8230;)
 we define &#8216;overloaded&#8217; functions, as in:</p>
 <div class="highlight"><pre><code class="ruby"><span class="n">glVertexf</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span>       <span class="c1"># will call glVertex2f()</span>
 <span class="n">glVertexf</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span>    <span class="c1"># will call glVertex3f()</span>
@@ -148,14 +149,14 @@ value or array:</p>
 <span class="n">glLoadMatrixf</span><span class="p">(</span><span class="n">matrix_b</span><span class="p">)</span> 
 <span class="n">glLoadMatrixf</span><span class="p">(</span><span class="n">matrix_c</span><span class="p">)</span> <span class="c1"># same result</span>
 </code></pre></div><p>You may also create your own matrix class and pass it this way, provided that it
-is convertible to array (has &#8216;to_a&#8217; method).</p>
+is convertible to array (has <code>to_a</code> method).</p>
 <p>Note that as OpenGL uses column-major
 notation for matrices, you may need to call transpose() when working with
 row-major matrices or arrays in ruby.</p>
 <h3 id="textures">Textures and other raw data</h3>
 <p>Data for textures, arrays, buffers etc. can be specified either as ruby arrays or directly as raw packed strings -
 strings that contains their direct memory representation (just like C arrays). If you need to convert between
-ruby arrays and these strings, use ruby Array#pack() and String#unpack() functions.
+ruby arrays and these strings, use ruby <code>Array#pack</code> and <code>String#unpack</code> functions.
 Example:</p>
 <div class="highlight"><pre><code class="ruby"><span class="c1"># create texture, 2x2 pixels,</span>
 <span class="c1"># 3 components (R,G,B) for each pixel as floats</span>
@@ -199,7 +200,7 @@ Functions:</p>
 <div class="highlight"><pre><code class="ruby"><span class="no">Gl</span><span class="o">.</span><span class="n">enable_error_checking</span>
 <span class="no">Gl</span><span class="o">.</span><span class="n">disable_error_checking</span>
 <span class="no">Gl</span><span class="o">.</span><span class="n">is_error_checking_enabled?</span> <span class="c1"># true/false</span>
-</code></pre></div><p>When the checking is enabled (default), glGetError() is executed after each OpenGL call, and should error
+</code></pre></div><p>When the checking is enabled (default), <code>glGetError()</code> is executed after each OpenGL call, and should error
 occur, Gl::Error exception is raised:</p>
 <div class="highlight"><pre><code class="ruby"><span class="no">Gl</span><span class="o">.</span><span class="n">enable_error_checking</span>
 <span class="o">.</span><span class="n">.</span><span class="o">.</span>
@@ -222,7 +223,7 @@ on your graphic drivers implementation.</p>
 <h3 id="examples">Examples</h3>
 <p>Various examples are in &#8216;examples&#8217; directory of the bindings. To run them, manually pass them to ruby like:</p>
 <div class="highlight"><pre><code class="sh">ruby some_sample.rb
-</code></pre></div><p>On windows, you may want to use &#8216;rubyw&#8217; instead, which displays the standard output window
+</code></pre></div><p>On windows, you may want to use <code>rubyw</code> instead, which displays the standard output window
 as some examples use the console for usage info etc.</p>
 <p>If you get &#8216;opengl not found&#8217; error, and you installed ruby-opengl from gems, your
 shell or ruby installation is probably not configured to use the gems; in that case type:</p>

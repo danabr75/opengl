@@ -68,15 +68,35 @@ Version 0.50 was released in October 2007.
 
 Version 0.60 was released in December 2007.
 
+After the development stopped on April 1st, 2009 (after being developed for
+a long time by only Jan D.), Eric H. picked up the development in 2011 and
+modernized the library. In 2012 Lars K. took over.
+
+The opengl gem 0.70 and 0.80 was released in February 2013. ruby-opengl now
+forwards to the opengl gem.
+
 h2. Thank you
 
 Aside from big thank-you's to the core devs, special thanks also goes to:
 
 * Bill Kelly -- provided some pilot code changing how users can call method and constant names.
 * Ilmari Heikkinen -- provided code for changing how users can call method and constant names.
-* James Adam -- Mac OS X fixes
+* "James Adam":https://github.com/lazyatom -- Mac OS X fixes
 * Tony Hursh -- Mac OS X glut build tweak
 * Sean Long -- More Mac OS X fixes
-* John Gabriele -- Numerous fixes, documentation, and project support
+* "John Gabriele":https://github.com/uvtc -- Numerous fixes, documentation, and project support
 * Ronald Pijnacker -- Windows support and bugfixes
 * **Yoshi** -- providing ruby-opengl-0.32g from which to work off of.
+
+Original ruby-opengl committers:
+
+* "Allain Hoang":https://github.com/hoanga
+* "Peter McLain":https://github.com/pbm -- SWIG wrapper, commits 2006-2007
+* "Vo Minh Thu":https://github.com/noteed
+* "Jan Dvorak":https://rubygems.org/profiles/snoutmate -- Responsible for most of the commits 2007-2009
+
+New era:
+
+* "Eric Hodel":https://github.com/drbrain -- 2011-2012 commits, fixes, modernization, examples
+* "Lars Kanis":https://github.com/larskanis
+* "Blaž Hrastnik":https://github.com/archSeer

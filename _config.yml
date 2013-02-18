@@ -3,6 +3,7 @@ pygments:   true
 lsi: false
 safe: true
 auto: true
+baseurl: /opengl
 
 redcloth:
   hard_breaks: false

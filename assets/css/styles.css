@@ -13,7 +13,7 @@
 
 body {
   color: #292724; /* http://ianstormtaylor.com/design-tip-never-use-black/ */
-  font-family: Titillium Text;
+  font-family: Lato;
 }
 
 a {
@@ -69,19 +69,28 @@ header a:hover {
 
 nav {
   float: left;
-  line-height: 36px;
-  margin: 0 12px;
+  line-height: 38px;
   font-size: 13px;
 }
 
 #nav li {
   float: left;
   padding: 2px 8px 0;
+  font-weight: bold;
+
 }
 
 #nav li:hover, #logo:hover {
   background-color: #222;
   color: #999;
+  cursor: pointer;
+}
+
+#nav li:first-child {
+  border-left: 1px solid #444;
+}
+#nav li:first-child:hover {
+  border-left: 1px solid #222;
 }
 
 #nav i {margin-top: 1px}
@@ -90,6 +99,9 @@ nav {
   float: left;
   font-weight: 600;
   font-size: 28px;
+  padding: 0 7px;
+  line-height: 38px; /* pixel perfect for lato */
+  border-right: 1px solid #111;
 }
 
 #container {
