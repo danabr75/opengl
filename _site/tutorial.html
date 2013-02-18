@@ -1,0 +1,378 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>OpenGL</title>
+
+    <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/syntax.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <div class="inner">
+          <div id="logo"><a href="/">OpenGL</a></div>
+          <nav>
+            <ul id="nav" class="clearfix">
+              <li id="nav-home"><a href="/">Home</a></li>
+              <li id="nav-blog"><a href="/blog/">Blog</a></li>
+              <li id="nav-documentation"><a href="/documentation/">Documentation</a></li>
+              <li id="nav-tutorial"><a href="/tutorial.html">Tutorial</a></li>
+              <li id="nav-frequent-questions"><a href="/frequent-questions/">FAQ</a></li>
+              <li id="nav-code"><a href="https://github.com/archSeer/opengl">Code</a></li>
+              <li id="nav-about"><a href="/about.html">About</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div id="container">
+
+<h1>Usage Tutorial</h1>
+<p>This page should serve as tutorial and also as reference to Ruby bindings for OpenGL
+language. It is assumed that you have basic understanding of both OpenGL and Ruby.</p>
+<p>If you are new to OpenGL, you can start by visiting <a href="http://www.opengl.org">OpenGL homepage</a>, reading the <a href="http://opengl.org/documentation/books/#the_opengl_programming_guide_the_official_guide_to_learning_opengl_version">OpenGL Programming Guide</a> (also known as Red Book) or going to <a href="http://nehe.gamedev.net/">NeHe&#8217;s tutorials page</a>.</p>
+<p>If you are new to Ruby, <a href="http://www.ruby-lang.org/en/documentation/">the ruby-lang website</a> contains lots of
+documentation and manuals for Ruby.</p>
+<h1>Table of Contents</h1>
+<p>Basics:</p>
+<ul>
+	<li><a href="#naming_conventions">Naming Conventions</a></li>
+	<li><a href="#function_parameters">Function parameters</a></li>
+	<li><a href="#return_values">Return values</a></li>
+	<li><a href="#matrices">Matrices</a></li>
+	<li><a href="#textures">Textures and other raw data</a></li>
+	<li><a href="#error_checking">Error Checking</a></li>
+	<li><a href="#examples">Examples</a></li>
+</ul>
+<p>Advanced stuff:</p>
+<ul>
+	<li><a href="#extensions">OpenGL version and Extensions</a></li>
+	<li><a href="#selection_feedback">Selection and Feedback queries</a></li>
+	<li><a href="#vertex_arrays">Vertex Arrays</a></li>
+	<li><a href="#buffer_objects">Buffer Objects</a></li>
+	<li><a href="#glut_sdl"><span class="caps">GLUT</span>, <span class="caps">SDL</span>, <span class="caps">GLFW</span>..</a></li>
+	<li><a href="#glut_callbacks"><span class="caps">GLUT</span> callbacks</a></li>
+	<li><a href="#internals">Internals</a></li>
+</ul>
+<p><span class="caps">API</span> reference:</p>
+<ul>
+	<li><span class="caps">TODO</span></li>
+</ul>
+<h2 id="naming_conventions">Naming conventions</h2>
+<p>The bindings contains three modules:</p>
+<ul>
+	<li>&#8216;Gl&#8217; &#8211; OpenGL functions itself</li>
+	<li>&#8216;Glu&#8217; &#8211; OpenGL Utility Library <span class="caps">API</span> &#8211; higher-level drawing routines, <span class="caps">NURBS</span> etc.</li>
+	<li>&#8216;Glut&#8217; &#8211; OpenGL Utility Toolkit &#8211; low level functions such as creating OpenGL
+  context, opening window or handling user input</li>
+</ul>
+<p>You can import all three modules by calling</p>
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;opengl&#39;</span>
+</code></pre></div><p>You can also load the modules separately by using:</p>
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;gl&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;glu&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;glut&#39;</span>
+</code></pre></div><p>The functions and constants are named the same as their C counterparts:</p>
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;opengl&#39;</span>
+<span class="c1"># ...</span>
+<span class="no">Gl</span><span class="o">.</span><span class="n">glFooBar</span><span class="p">(</span> <span class="ss">Gl</span><span class="p">:</span><span class="ss">:GL_FOO_BAR</span> <span class="p">)</span>
+<span class="no">Glu</span><span class="o">.</span><span class="n">gluFooBar</span><span class="p">(</span> <span class="ss">Glu</span><span class="p">:</span><span class="ss">:GLU_FOO_BAR</span> <span class="p">)</span>
+<span class="no">Glut</span><span class="o">.</span><span class="n">glutFooBar</span><span class="p">(</span> <span class="ss">Glut</span><span class="p">:</span><span class="ss">:GLUT_FOO_BAR</span> <span class="p">)</span>
+</code></pre></div><p>This is the &#8216;full&#8217; syntax, useful when you are expecting name clashes
+with other modules, or just want to be formal ;) More often, you will
+want to use the &#8216;C-style&#8217; syntax, which you can accomplish by using &#8216;include&#8217;
+to export the module functions and constants to global namespace:</p>
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;opengl&#39;</span>
+<span class="kp">include</span> <span class="no">Gl</span><span class="p">,</span><span class="no">Glu</span><span class="p">,</span><span class="no">Glut</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="n">glFooBar</span><span class="p">(</span> <span class="no">GL_FOO_BAR</span> <span class="p">)</span>
+<span class="n">gluFooBar</span><span class="p">(</span> <span class="no">GLU_FOO_BAR</span> <span class="p">)</span>
+<span class="n">glutFooBar</span><span class="p">(</span> <span class="no">GLUT_FOO_BAR</span> <span class="p">)</span>
+</code></pre></div><p>Finally, you can use the &#8216;old&#8217; syntax:</p>
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;opengl&#39;</span>
+<span class="c1"># ...</span>
+<span class="c1"># Note the missing prefixes in functions and constants</span>
+<span class="c1"># and also capitalization of module names</span>
+<span class="no">GL</span><span class="o">.</span><span class="n">FooBar</span><span class="p">(</span> <span class="ss">GL</span><span class="p">:</span><span class="ss">:FOO_BAR</span> <span class="p">)</span>
+<span class="no">GLU</span><span class="o">.</span><span class="n">FooBar</span><span class="p">(</span> <span class="ss">GLU</span><span class="p">:</span><span class="ss">:FOO_BAR</span> <span class="p">)</span>
+<span class="no">GLUT</span><span class="o">.</span><span class="n">FooBar</span><span class="p">(</span> <span class="ss">GLUT</span><span class="p">:</span><span class="ss">:FOO_BAR</span> <span class="p">)</span>
+</code></pre></div><p>This syntax was used by previous ruby-opengl versions; some people also
+consider it as being more in the spirit of OO programming. It has one
+downside though &#8211; due to Ruby&#8217;s naming scheme, you cannot use constants
+which begins with number, e.g. GL_2D would under this syntax be (GL::)2D
+which is illegal.</p>
+<p>All three variants of syntax will continue to be supported in future,
+so it&#8217;s up to you which one you choose to use.</p>
+<p>The rest of this tutorial will use the C syntax.</p>
+<h2>Calling syntax</h2>
+<h3 id="function_parameters">Function parameters</h3>
+<p>For most types the ruby syntax follows the C <span class="caps">API</span>. If needed, ruby will do
+automatic parameter conversion to required type if possible. Example:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">glVertex3f</span><span class="p">(</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span> <span class="p">)</span>  <span class="c1"># matches C syntax</span>
+<span class="n">glVertex3f</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span>        <span class="c1"># equivalent to the above</span>
+<span class="n">glVertex3f</span><span class="p">(</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span> <span class="c1"># raises TypeError exception</span>
+</code></pre></div><p>Arrays are passed/received as Ruby arrays:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">vertex</span> <span class="o">=</span> <span class="o">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">]</span>
+<span class="n">glVertex3fv</span><span class="p">(</span> <span class="n">vertex</span> <span class="p">)</span>
+</code></pre></div><p>For functions with multiple parameter-number variations (glVertex,glColor,&#8230;)
+we define &#8216;overloaded&#8217; functions, as in:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">glVertexf</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span>       <span class="c1"># will call glVertex2f()</span>
+<span class="n">glVertexf</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span>    <span class="c1"># will call glVertex3f()</span>
+<span class="n">glVertexf</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span> <span class="c1"># will call glVertex4f()</span>
+<span class="n">glVertexi</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">)</span>       <span class="c1"># will call glVertex2i()</span>
+<span class="c1"># ... and so on</span>
+</code></pre></div><h3 id="return_values">Return values</h3>
+<p>In C, OpenGL functions rarely return values directly, instead you pass in pointer to
+preallocated buffer and they will fill it with values; sometimes you have to even query
+how big buffer you&#8217;ll need to allocate. Ruby does this all for you, returning either single
+value or array:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">glColor4f</span><span class="p">(</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span> <span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">glGetDoublev</span><span class="p">(</span><span class="no">GL_CURRENT_COLOR</span><span class="p">)</span>
+<span class="nb">p</span> <span class="n">color</span> <span class="c1"># will be [1.0,1.0,1.0,1.0]</span>
+</code></pre></div><h3 id="matrices">Matrices</h3>
+<p>Matrices are passed and received as ruby array, or as ruby Matrix objects:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">matrix_a</span> <span class="o">=</span> <span class="o">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="o">]</span>
+<span class="n">matrix_b</span> <span class="o">=</span> <span class="o">[</span> <span class="o">[</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="o">]</span><span class="p">,</span>
+             <span class="o">[</span>  <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span> <span class="o">]</span><span class="p">,</span>
+             <span class="o">[</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span> <span class="o">]</span><span class="p">,</span>
+             <span class="o">[</span> <span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span> <span class="o">]</span> <span class="o">]</span>
+<span class="n">matrix_c</span> <span class="o">=</span> <span class="no">Matrix</span><span class="o">.</span><span class="n">rows</span><span class="p">(</span> <span class="o">[</span> <span class="o">[</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="o">]</span><span class="p">,</span>
+                          <span class="o">[</span>  <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span> <span class="o">]</span><span class="p">,</span>
+                          <span class="o">[</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span> <span class="o">]</span><span class="p">,</span>
+                          <span class="o">[</span> <span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span> <span class="o">]</span> <span class="o">]</span> <span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="n">glLoadMatrixf</span><span class="p">(</span><span class="n">matrix_a</span><span class="p">)</span>
+<span class="n">glLoadMatrixf</span><span class="p">(</span><span class="n">matrix_b</span><span class="p">)</span> 
+<span class="n">glLoadMatrixf</span><span class="p">(</span><span class="n">matrix_c</span><span class="p">)</span> <span class="c1"># same result</span>
+</code></pre></div><p>You may also create your own matrix class and pass it this way, provided that it
+is convertible to array (has &#8216;to_a&#8217; method).</p>
+<p>Note that as OpenGL uses column-major
+notation for matrices, you may need to call transpose() when working with
+row-major matrices or arrays in ruby.</p>
+<h3 id="textures">Textures and other raw data</h3>
+<p>Data for textures, arrays, buffers etc. can be specified either as ruby arrays or directly as raw packed strings -
+strings that contains their direct memory representation (just like C arrays). If you need to convert between
+ruby arrays and these strings, use ruby Array#pack() and String#unpack() functions.
+Example:</p>
+<div class="highlight"><pre><code class="ruby"><span class="c1"># create texture, 2x2 pixels,</span>
+<span class="c1"># 3 components (R,G,B) for each pixel as floats</span>
+<span class="n">texture</span> <span class="o">=</span> <span class="o">[</span>
+           <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># 1st pixel, red</span>
+           <span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># 2nd pixel, green</span>
+           <span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># 3rd pixel, blue</span>
+           <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">.</span><span class="mi">0</span>  <span class="c1"># 4th pixel, white</span>
+          <span class="o">]</span>
+<span class="c1"># convert it to string</span>
+<span class="c1"># f = native float representation</span>
+<span class="c1"># * = convert all values in the array the same way</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">texture</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f*&quot;</span><span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="n">glTexImage2D</span><span class="p">(</span>
+  <span class="no">GL_TEXTURE_2D</span><span class="p">,</span> <span class="c1"># target</span>
+  <span class="mi">0</span><span class="p">,</span>             <span class="c1"># mipmap level,</span>
+  <span class="no">GL_RGB8</span><span class="p">,</span>       <span class="c1"># internal format</span>
+  <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>          <span class="c1"># width, height</span>
+  <span class="mi">0</span><span class="p">,</span>             <span class="c1"># border = no</span>
+  <span class="no">GL_RGB</span><span class="p">,</span>        <span class="c1"># components per each pixel</span>
+  <span class="no">GL_FLOAT</span><span class="p">,</span>      <span class="c1"># component type - floats</span>
+  <span class="n">data</span>           <span class="c1"># the packed data</span>
+<span class="p">)</span>
+</code></pre></div><p>Reverse works just the same:</p>
+<div class="highlight"><pre><code class="ruby"><span class="c1"># ...</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">glGetTexImage</span><span class="p">(</span> <span class="c1"># returns the packed data as string</span>
+  <span class="no">GL_TEXTURE_2D</span><span class="p">,</span> <span class="c1"># target</span>
+  <span class="mi">0</span><span class="p">,</span>             <span class="c1"># mipmap level</span>
+  <span class="no">GL_RGB</span><span class="p">,</span>        <span class="c1"># components per pixel</span>
+  <span class="no">GL_FLOAT</span>       <span class="c1"># component type</span>
+<span class="p">)</span>
+<span class="c1"># now convert it to ruby array</span>
+<span class="n">texture</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f*&quot;</span><span class="p">)</span>
+<span class="c1">#...</span>
+</code></pre></div><p>For storage, packed strings are more memory efficient than ruby arrays, but
+cannot be easily changed or manipulated.</p>
+<h3 id="error_checking">Error Checking</h3>
+<p>Starting with version 0.60.0, opengl performs automatic checking of OpenGL and <span class="caps">GLU</span> errors.
+Functions:</p>
+<div class="highlight"><pre><code class="ruby"><span class="no">Gl</span><span class="o">.</span><span class="n">enable_error_checking</span>
+<span class="no">Gl</span><span class="o">.</span><span class="n">disable_error_checking</span>
+<span class="no">Gl</span><span class="o">.</span><span class="n">is_error_checking_enabled?</span> <span class="c1"># true/false</span>
+</code></pre></div><p>When the checking is enabled (default), glGetError() is executed after each OpenGL call, and should error
+occur, Gl::Error exception is raised:</p>
+<div class="highlight"><pre><code class="ruby"><span class="no">Gl</span><span class="o">.</span><span class="n">enable_error_checking</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="k">begin</span> 
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="n">glEnable</span><span class="p">(</span><span class="no">GL_TRUE</span><span class="p">)</span> <span class="c1"># will raise exception</span>
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="k">rescue</span> <span class="ss">Gl</span><span class="p">:</span><span class="ss">:Error</span> <span class="o">=&gt;</span> <span class="n">err</span>
+  <span class="c1"># err.id contains the OpenGL error ID</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="no">GL_INVALID_ENUM</span><span class="p">)</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Oh noes! You used invalid enum!&quot;</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="k">end</span>
+  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="k">end</span>
+</code></pre></div><p>Some <span class="caps">GLU</span> functions may also throw Glu::Error &#8211; the handling is the same as above.</p>
+<p>It is usually good idea to leave error checking on for all your code, as OpenGL errors have habit to pop-up in
+unexpected places. For now there is no measurable performance hit for error checking, although this may depend
+on your graphic drivers implementation.</p>
+<h3 id="examples">Examples</h3>
+<p>Various examples are in &#8216;examples&#8217; directory of the bindings. To run them, manually pass them to ruby like:</p>
+<div class="highlight"><pre><code class="sh">ruby some_sample.rb
+</code></pre></div><p>On windows, you may want to use &#8216;rubyw&#8217; instead, which displays the standard output window
+as some examples use the console for usage info etc.</p>
+<p>If you get &#8216;opengl not found&#8217; error, and you installed ruby-opengl from gems, your
+shell or ruby installation is probably not configured to use the gems; in that case type:</p>
+<div class="highlight"><pre><code class="sh">ruby -rubygems some_sample.rb
+</code></pre></div><p>The `<span class="caps">README</span>` file in the `examples` directory contains some notes on the examples.</p>
+<h3 id="extensions">OpenGL Version and Extensions</h3>
+<p>To query for available OpenGL version or OpenGL extension, use Gl.is_available? function:</p>
+<div class="highlight"><pre><code class="ruby"><span class="c1"># true if OpenGL version is 2.0 or later is available</span>
+<span class="no">Gl</span><span class="o">.</span><span class="n">is_available?</span><span class="p">(</span><span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="c1"># returns true if GL_ARB_shadow is available on this system</span>
+<span class="no">Gl</span><span class="o">.</span><span class="n">is_available?</span><span class="p">(</span><span class="s2">&quot;GL_ARB_shadow&quot;</span><span class="p">)</span>
+</code></pre></div><p>For list of what extensions are supported in ruby-opengl see this [page](extensions.html)</p>
+<p>The extensions&#8217; function names once again follows the C <span class="caps">API</span>. Some extensions were over time
+promoted to <span class="caps">ARB</span> or even to OpenGL core, retaining their function names just with suffix changed
+or removed. However sometimes the functions semantics was changed in the process, so to avoid
+confusion, ruby-opengl bindings will strictly adhere to the C naming, e.g. :</p>
+<div class="highlight"><pre><code class="ruby"><span class="c1"># will call the function from GL_ARB_transpose_matrix extension</span>
+<span class="n">glLoadTransposeMatrixfARB</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="c1"># will call the function from OpenGL 1.3</span>
+<span class="n">glLoadTransposeMatrixf</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</code></pre></div><p><strong>Note:</strong> opengl is compiled against OpenGL 1.1, and all functions and enums from later
+versions of OpenGL and from extensions are loaded dynamically at runtime. That means that all
+of OpenGL 2.1 and supported extensions are available even if the ruby-opengl bindings are
+compiled on platform which lacks proper libraries or headers (like for example Windows without
+installed graphic drivers). This should ease binary-only distribution and application packaging.</p>
+<h3 id="selection_feedback">Selection/Feedback queries</h3>
+<p>Querying selection and feedback is different from C. Example:</p>
+<div class="highlight"><pre><code class="ruby"><span class="c1"># this will create selection buffer 512*sizeof(GLuint) long</span>
+<span class="n">buf</span> <span class="o">=</span> <span class="n">glselectbuffer</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+<span class="c1"># enter feedback mode</span>
+<span class="n">glRenderMode</span><span class="p">(</span><span class="no">GL_SELECT</span><span class="p">)</span> 
+<span class="c1"># ... draw something here </span>
+<span class="c1"># return to render mode</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">glRenderMode</span><span class="p">(</span><span class="no">GL_RENDER</span><span class="p">)</span>
+<span class="c1"># at this point the buf string is freezed and contains</span>
+<span class="c1"># the selection data, which you can recover with unpack</span>
+<span class="c1"># function</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;I*&quot;</span><span class="p">)</span> <span class="c1"># I for unsigned integer</span>
+<span class="c1"># also, next call to glRenderMode(GL_SELECT) will overwrite</span>
+<span class="c1"># the &#39;buf&#39; buffer with new data</span>
+</code></pre></div><p>The feedback query follows the same pattern, only the data are stored
+as floats.</p>
+<h3 id="vertex_arrays">Vertex Arrays</h3>
+<p>In current state, vertex arrays are not very efficient in ruby-opengl, as it is not possible to change
+the array content once it is specified, and there is overhead for converting between ruby and C representation
+of numbers. Using display lists for static and immediate mode for dynamic objects is recommended instead.</p>
+<p>You can specify the data the same way as <a href="#textures">texture data</a>. Example:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">normals</span> <span class="o">=</span> <span class="o">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="o">]</span>
+<span class="n">glNormalPointer</span><span class="p">(</span><span class="no">GL_FLOAT</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">normals</span><span class="p">)</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+<span class="n">glEnable</span><span class="p">(</span><span class="no">GL_NORMAL_ARRAY</span><span class="p">)</span>
+<span class="n">glDrawArrays</span><span class="p">(</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="p">)</span>
+<span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</code></pre></div><p>This applies to all *pointer functions. glGetPointerv will return reference to the frozen string
+previously specified.</p>
+<h3>Buffer Objects</h3>
+<p>Once again, in current state buffer objects (VBOs in particular) are not very efficient in ruby-opengl.
+Unlike textures and vertex arrays, the data for buffers <strong>must</strong> be prepacked by using .pack() function,
+as buffers does not retain information about the storage type. Mapping of the buffer afterwards is read-only.</p>
+<p>Like in C, buffer binding affects some functions in way that if particular buffer is bound, the related
+functions (for example glTexImage) take integer offset in place of data string argument. This is also true
+for getter functions (e.g. glGetTexImage) &#8211; instead of returning the data string, they take offset as they&#8217;re
+last argument (so in ruby they take one extra argument), and will write the data in the bound buffer as expected.</p>
+<p><span class="caps">VBO</span> example:</p>
+<div class="highlight"><pre><code class="ruby"><span class="c1"># specify 3 vertices, 2*float each</span>
+<span class="n">data</span> <span class="o">=</span> <span class="o">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="o">].</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;f*&quot;</span><span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="c1"># generate buffer name</span>
+<span class="n">buffers</span> <span class="o">=</span> <span class="n">glGenBuffers</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># bind to the name to ARRAY buffer for vertex array</span>
+<span class="n">glBindBuffer</span><span class="p">(</span><span class="no">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="n">buffers</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
+<span class="c1"># here the data is specified, size is n*sizeof(float)</span>
+<span class="c1"># note that you don&#39;t get to specify type, as buffers</span>
+<span class="c1"># operate on byte level</span>
+<span class="n">glBufferData</span><span class="p">(</span><span class="no">GL_ARRAY_BUFFER</span><span class="p">,</span><span class="mi">6</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="no">GL_DYNAMIC_DRAW</span><span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="c1"># here instead of specyfing the data, you pass &#39;0&#39; (or</span>
+<span class="c1"># positive integer) as offset to the bound buffer</span>
+<span class="n">glVertexPointer</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="no">GL_FLOAT</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="n">glEnableClientState</span><span class="p">(</span><span class="no">GL_VERTEX_ARRAY</span><span class="p">)</span>
+<span class="c1"># ...</span>
+</code></pre></div><h3 id="glut_sdl"><span class="caps">GLUT</span>, <span class="caps">SDL</span>, <span class="caps">GLFW</span>..</h3>
+<p>When it comes to low-level task like GL window creation, input and event handling, the first choice is <span class="caps">GLUT</span>,
+as it is readilly available alongside OpenGL. However both <span class="caps">GLUT</span> itself and its implementations
+have their drawbacks, and for that and other reasons there are number of replacement libraries.
+You can use any of them with ruby-opengl (as long as there are ruby bindings for them).</p>
+<p>Here is example for <a href="http://www.kmc.gr.jp/~ohai/index.en.html"><span class="caps">SDL</span></a>:</p>
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;opengl&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;sdl&#39;</span>
+<span class="c1"># init</span>
+<span class="no">SDL</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="ss">SDL</span><span class="p">:</span><span class="ss">:INIT_VIDEO</span><span class="p">)</span>
+<span class="no">SDL</span><span class="o">.</span><span class="n">setGLAttr</span><span class="p">(</span><span class="ss">SDL</span><span class="p">:</span><span class="ss">:GL_DOUBLEBUFFER</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="no">SDL</span><span class="o">.</span><span class="n">setVideoMode</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span><span class="mi">512</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="ss">SDL</span><span class="p">:</span><span class="ss">:OPENGL</span><span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="no">Gl</span><span class="o">.</span><span class="n">glVertex3f</span><span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="no">SDL</span><span class="o">.</span><span class="n">GLSwapBuffers</span><span class="p">()</span>
+<span class="c1"># ...</span>
+</code></pre></div><p>and another example for <a href="http://ruby-glfw.rubyforge.org/"><span class="caps">GLFW</span></a>:</p>
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;opengl&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;glfw&#39;</span>
+<span class="c1"># init</span>
+<span class="no">Glfw</span><span class="o">.</span><span class="n">glfwOpenWindow</span><span class="p">(</span> <span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="ss">Glfw</span><span class="p">:</span><span class="ss">:GLFW_WINDOW</span> <span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="no">Gl</span><span class="o">.</span><span class="n">glVertex3f</span><span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># ...</span>
+<span class="no">Glfw</span><span class="o">.</span><span class="n">glfwSwapBuffers</span><span class="p">()</span>
+<span class="c1"># ...</span>
+</code></pre></div><h3 id="glut_callbacks"><span class="caps">GLUT</span> callbacks</h3>
+<p>The <span class="caps">GLUT</span> callback functions are specified as Proc objects, which you can
+either create with lambda as:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">reshape</span> <span class="o">=</span> <span class="nb">lambda</span> <span class="k">do</span> <span class="o">|</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="o">|</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+<span class="c1"># ...</span>
+<span class="n">glutReshapeFunc</span><span class="p">(</span> <span class="n">reshape</span> <span class="p">)</span>
+</code></pre></div><p>or by conversion from normal functions:</p>
+<div class="highlight"><pre><code class="ruby"><span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">h</span><span class="p">)</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+<span class="c1"># ...</span>
+<span class="n">glutReshapeFunc</span><span class="p">(</span> <span class="nb">method</span><span class="p">(</span><span class="s2">&quot;reshape&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_proc</span> <span class="p">)</span>
+</code></pre></div><p>Note: An older notation you&#8217;ll see instead of <code>lambda</code> is <code>proc</code>. The
+PickAxe v2 notes that <code>proc</code> is &#8220;mildly deprecated&#8221; in favor of <code>lambda</code>.
+You&#8217;ll also sometimes see <code>Proc.new</code> used in place of either. Pages 359-360 of
+PickAxe v2 describe the differences between using <code>lambda</code> and <code>Proc.new</code>,
+but for our purposes either will be fine.</p>
+<h3 id="internals">Internals</h3>
+<p>The directory structure follows current Ruby standards, with a few
+extra directories added.</p>
+<ul>
+	<li><strong>doc/</strong> &#8212; Contains documentation for the project (from which this
+  website is generated).</li>
+	<li><strong>examples/</strong> &#8212; Example programs.</li>
+	<li><strong>ext/</strong> &#8212; Contains subdirectories, one for each of the three extension
+  modules (gl, glu, glut). Herein are the files needed to compile the extension
+  modules.</li>
+	<li><strong>lib/</strong> &#8212; Files that the user is meant to `require` in their own code.</li>
+	<li><strong>test/</strong> &#8212; Contains automatic testsuite for the bindings</li>
+	<li><strong>utils/</strong> &#8212; Some utility scripts used to help generate code, documentation
+  and website.</li>
+</ul>
+
+      </div>
+      <footer>
+        Copyright © 2013 Blaž Hrastnik – <a href="http://github.com/jnunemaker/mongomapper/blob/master/LICENSE">License</a>
+      </footer>
+    </div>
+  </body>
+</html>

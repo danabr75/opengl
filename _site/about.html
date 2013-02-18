@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>OpenGL</title>
+
+    <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/styles.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/syntax.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <header>
+        <div class="inner">
+          <div id="logo"><a href="/">OpenGL</a></div>
+          <nav>
+            <ul id="nav" class="clearfix">
+              <li id="nav-home"><a href="/">Home</a></li>
+              <li id="nav-blog"><a href="/blog/">Blog</a></li>
+              <li id="nav-documentation"><a href="/documentation/">Documentation</a></li>
+              <li id="nav-tutorial"><a href="/tutorial.html">Tutorial</a></li>
+              <li id="nav-frequent-questions"><a href="/frequent-questions/">FAQ</a></li>
+              <li id="nav-code"><a href="https://github.com/archSeer/opengl">Code</a></li>
+              <li id="nav-about"><a href="/about.html">About</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div id="container">
+
+<h1>Project history</h1>
+<p>The <a href="http://www2.giganet.net/~yoshi/">original ruby-opengl</a> was written
+by Yoshi.</p>
+<p>James A. desperately wanted to get the OpenGL Ruby bindings working on his Mac,
+but they wouldn&#8217;t even compile on <span class="caps">OSX</span>. After a little bit of tweaking, he made
+his patched bindings available to the ruby community in a very informal manner.</p>
+<p>John G. then wanted to clean it up and add some docs to it, and so started
+tweaking and put up a new site and made his changes available.</p>
+<p>Then Peter M. came along and decided to try updating ruby-opengl using <span class="caps">SWIG</span>,
+as it seemed easier than doing everything by hand. Peter wrote the new code,
+John started the actual RubyForge project, put up a new site, and Peter
+committed the code.</p>
+<p>Thu M. V. joined the project with a lot of energy, and the mailing list
+was showing a good bit of activity.</p>
+<p>After some experience, we began to question whether <span class="caps">SWIG</span> was necessary/helpful
+for a project of this nature.  The leaning was that people want to abandon
+<span class="caps">SWIG</span> and go back to maintaining the binding files by hand. Thu even provided
+a script to help with the manual coding that would be required without using
+<span class="caps">SWIG</span>.</p>
+<p>The reasoning at the time was:</p>
+<p>Pro-<span class="caps">SWIG</span>:</p>
+<ul>
+	<li>Could use the .i files for another project, perhaps (<span class="caps">OTOH</span>, we couldn&#8217;t
+  use previous .i files on this project&#8230;)</li>
+</ul>
+<ul>
+	<li>It&#8217;s supposed to require less manual coding.</li>
+</ul>
+<p>Con-<span class="caps">SWIG</span>:</p>
+<ul>
+	<li>yet another tool to learn</li>
+</ul>
+<ul>
+	<li>OpenGL isn&#8217;t really all that big</li>
+</ul>
+<ul>
+	<li>OpenGL doesn&#8217;t change a lot</li>
+</ul>
+<ul>
+	<li>A lot of boilerplate and overhead in the generated files because <span class="caps">SWIG</span> is
+  a general tool.</li>
+</ul>
+<p>In September 2006, we stopped using <span class="caps">SWIG</span>. Thu and Peter began fine tuning
+Thu&#8217;s original <code>utils/mkwrap.rb</code> script.</p>
+<p>Development stalled in October 2006.</p>
+<p>Development picked up again towards the end of 2006. After a long hiatus 
+and getting a new release of mkrf out the door, version 0.33 (following the
+numbering of original Yoshi&#8217;s bindings which stalled at 0.32) was released.</p>
+<p>During first half of 2007, we added large portion of code, as well as number
+of unit tests, creating near-complete support for OpenGL 2.1.
+Support for MS Windows was also added during this time.</p>
+<p>Version 0.40 was released in July 2007.</p>
+<p>Version 0.50 was released in October 2007.</p>
+<p>Version 0.60 was released in December 2007.</p>
+<h2>Thank you</h2>
+<p>Aside from big thank-you&#8217;s to the core devs, special thanks also goes to:</p>
+<ul>
+	<li>Bill Kelly &#8212; provided some pilot code changing how users can call method and constant names.</li>
+	<li>Ilmari Heikkinen &#8212; provided code for changing how users can call method and constant names.</li>
+	<li>James Adam &#8212; Mac OS X fixes</li>
+	<li>Tony Hursh &#8212; Mac OS X glut build tweak</li>
+	<li>Sean Long &#8212; More Mac OS X fixes</li>
+	<li>John Gabriele &#8212; Numerous fixes, documentation, and project support</li>
+	<li>Ronald Pijnacker &#8212; Windows support and bugfixes</li>
+	<li><b>Yoshi</b> &#8212; providing ruby-opengl-0.32g from which to work off of.</li>
+</ul>
+
+      </div>
+      <footer>
+        Copyright © 2013 Blaž Hrastnik – <a href="http://github.com/jnunemaker/mongomapper/blob/master/LICENSE">License</a>
+      </footer>
+    </div>
+  </body>
+</html>
