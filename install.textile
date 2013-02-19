@@ -11,7 +11,6 @@ h3. General
 * C compiler (not needed for binary install on Windows)
 * ruby 1.9.2+
 * rake
-* mkrf 0.2.3+
 * OpenGL headers for OpenGL version 1.1 or later (not needed for binary install on Windows)
 * GLUT 3.7+ or API-compatible implementation (freeglut, OpenGLUT)
 
@@ -73,7 +72,6 @@ h3. Manual Build instructions for all platforms (see above for platform-specific
    and (if needed) appropriate developer packages (ruby-dev, ruby1.9-dev, ...)
 # Make sure you have a working C compiler
 # Install rake  by running @gem install rake@
-# Install mkrf (0.2.3+) by running @gem install mkrf@
 # Make sure you have working OpenGL installation, this includes libGL, libGLU,
    glut and (if needed) appropriate -dev or -devel packages.
 # Run @rake@ in the root directory of the project

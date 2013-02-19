@@ -1,5 +1,5 @@
 ---
 layout: default
 ---
-{{ page.url }}
+
 h1. Frequently asked questions
