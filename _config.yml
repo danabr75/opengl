@@ -3,7 +3,6 @@ pygments:   true
 lsi: false
 safe: true
 auto: true
-relative_to: "http://archseer.github.com/opengl/"
 
 redcloth:
   hard_breaks: false
