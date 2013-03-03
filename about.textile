@@ -75,6 +75,9 @@ modernized the library. In 2012 Lars K. took over.
 The opengl gem 0.70 and 0.80 was released in February 2013. ruby-opengl now
 forwards to the opengl gem.
 
+"glut":https://github.com/archSeer/glut and "glu":https://github.com/archSeer/glu
+were split from the opengl into separate gems in March 2013.
+
 h2. Thank you
 
 Aside from big thank-you's to the core devs, special thanks also goes to:

@@ -12,6 +12,9 @@ If you are new to OpenGL, you can start by visiting "OpenGL homepage":http://www
 If you are new to Ruby, "the ruby-lang website":http://www.ruby-lang.org/en/documentation/ contains lots of
 documentation and manuals for Ruby.
 
+*Note:* While older gem versions packaged GLU and GLUT together with OpenGL, they are
+now standalone libraries.
+
 h1. Table of Contents
 
 Basics:
@@ -35,33 +38,20 @@ Advanced stuff:
 API reference:
 * TODO
 
-
 h2(#naming_conventions). Naming conventions
 
-The bindings contains three modules:
-* @Gl@ - OpenGL functions itself
-* @Glu@ - OpenGL Utility Library API - higher-level drawing routines, NURBS etc.
-* @Glut@ - OpenGL Utility Toolkit - low level functions such as creating OpenGL
-  context, opening window or handling user input
-
-You can import all three modules by calling
+You can import opengl by calling:
 
 {% highlight ruby %}
 require 'opengl'
-{% endhighlight %}
-
-You can also load the modules separately by using:
-
-{% highlight ruby %}
-require 'gl'
-require 'glu'
-require 'glut'
 {% endhighlight %}
 
 The functions and constants are named the same as their C counterparts:
 
 {% highlight ruby %}
 require 'opengl'
+require 'glu'
+require 'glut'
 # ...
 Gl.glFooBar( Gl::GL_FOO_BAR )
 Glu.gluFooBar( Glu::GLU_FOO_BAR )
@@ -75,6 +65,8 @@ to export the module functions and constants to global namespace:
 
 {% highlight ruby %}
 require 'opengl'
+require 'glu'
+require 'glut'
 include Gl,Glu,Glut
 ...
 glFooBar( GL_FOO_BAR )
@@ -86,6 +78,8 @@ Finally, you can use the 'old' syntax:
 
 {% highlight ruby %}
 require 'opengl'
+require 'glu'
+require 'glut'
 # ...
 # Note the missing prefixes in functions and constants
 # and also capitalization of module names
@@ -94,7 +88,7 @@ GLU.FooBar( GLU::FOO_BAR )
 GLUT.FooBar( GLUT::FOO_BAR )
 {% endhighlight %}
 
-This syntax was used by previous ruby-opengl versions; some people also
+This syntax was used by previous opengl gem versions; some people also
 consider it as being more in the spirit of OO programming. It has one
 downside though - due to Ruby's naming scheme, you cannot use constants
 which begins with number, e.g. GL_2D would under this syntax be (GL::)2D
@@ -397,10 +391,14 @@ glEnableClientState(GL_VERTEX_ARRAY)
 
 h3(#glut_sdl). GLUT, SDL, GLFW..
 
-When it comes to low-level task like GL window creation, input and event handling, the first choice is GLUT,
-as it is readilly available alongside OpenGL. However both GLUT itself and its implementations
-have their drawbacks, and for that and other reasons there are number of replacement libraries.
-You can use any of them with ruby-opengl (as long as there are ruby bindings for them).
+When it comes to low-level task like GL window creation, input and event handling, the usual
+first choice is GLUT, as it is readilly available alongside OpenGL. However both GLUT itself
+and its implementations have their drawbacks, and for that and other reasons there are number
+of replacement libraries. You can use any of them with the opengl gem (as long as there are
+ruby bindings for them).
+
+*Note:* Older gem versions packaged GLUT with the opengl gem, however it is now a standalone
+gem.
 
 Here is example for "SDL":http://www.kmc.gr.jp/~ohai/index.en.html:
 
@@ -466,13 +464,9 @@ h3(#internals). Internals
 The directory structure follows current Ruby standards, with a few
 extra directories added.
 
-* *doc/* -- Contains documentation for the project (from which this
-  website is generated).
 * *examples/* -- Example programs.
-* *ext/* -- Contains subdirectories, one for each of the three extension
-  modules (gl, glu, glut). Herein are the files needed to compile the extension
+* *ext/* -- Herein are the files needed to compile the extension
   modules.
 * *lib/* -- Files that the user is meant to `require` in their own code.
 * *test/* -- Contains automatic testsuite for the bindings
-* *utils/* -- Some utility scripts used to help generate code, documentation
-  and website.
+* *utils/* -- Some utility scripts used to help generate code and documentation.

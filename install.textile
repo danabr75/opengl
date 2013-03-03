@@ -12,6 +12,8 @@ h3. General
 * ruby 1.9.2+
 * rake
 * OpenGL headers for OpenGL version 1.1 or later (not needed for binary install on Windows)
+
+For glut:
 * GLUT 3.7+ or API-compatible implementation (freeglut, OpenGLUT)
 
 The main goal is having ruby installed and being capable of compiling
@@ -25,8 +27,9 @@ On Ubuntu or Debian systems, aside from Ruby you'll need the 'developer' package
 
 For OpenGL related headers you'll need the following packages:
 
-* @libgl1-mesa-dri@ @libglu1-mesa@ @freeglut3@
-* @libgl1-mesa-dev@ @libglu1-mesa-dev@ @freeglut3-dev@
+* @libgl1-mesa-dri@/@libgl1-mesa-dev@ -- opengl
+* @libglu1-mesa@/@libglu1-mesa-dev@ -- glu
+* @freeglut3@/@freeglut3-dev@ -- (free)glut
 
 On some distributions you may need the @xorg-dev@ developer package.
 
@@ -48,10 +51,6 @@ For manual build on Windows you need to have platform SDK and compiler that *mus
 
 If ruby was installed via the one-click installer, the "DevKit":http://rubyinstaller.org/add-ons/devkit/
 is also needed (for compiling native C extensions).
-
-You may also need @glut.h@ in SDK include directory, as the one-click ruby
-installer is missing it. You can copy the file from glut package at "glut homepage":http://www.xmission.com/~nate/glut.html.
-Alternatively, you can install the precompiled binary gem (see below).
 
 h2. Build and installation
 
