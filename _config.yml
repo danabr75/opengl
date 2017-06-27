@@ -4,5 +4,4 @@ lsi: false
 safe: true
 auto: true
 
-redcloth:
-  hard_breaks: false
+markdown: kramdown
