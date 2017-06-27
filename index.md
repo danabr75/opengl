@@ -13,29 +13,29 @@ libraries.
 
 h2. Synopsis
 
-{% highlight ruby %}
+```ruby
 require 'opengl'
 # (code sample of usage)
-{% endhighlight %}
+```
 
 h2. Requirements
 
-* Ruby 2.0+ (see "0.7":https://github.com/larskanis/opengl/tree/0.7 for Ruby 1.8.x compatible branch)
+* Ruby 2.0+ (see [0.7](https://github.com/larskanis/opengl/tree/0.7) for Ruby 1.8.x compatible branch)
 * OpenGL development files installed
 * GLU and (free-)GLUT development files installed for glu/glut gem.
 
 h2. Install
 
-{% highlight sh %}
+```sh
 gem install opengl
-{% endhighlight %}
+```
 
 h2. Developers
 
 After checking out the source, run:
 
-{% highlight sh %}
+```sh
 $ bundle install
-{% endhighlight %}
+```
 
 This task will install any missing dependencies.
