@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<h1 class=logo>opengl</h1>
+<h1 class='logo'>opengl</h1>
 
 An OpenGL wrapper for Ruby. Contains bindings for OpenGL.
 Available for Windows, Linux and OS X. GLUT, GLU and GLFW were split
