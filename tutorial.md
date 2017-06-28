@@ -400,7 +400,7 @@ ruby bindings for them).
 *Note:* Older gem versions packaged GLUT with the opengl gem, however it is now a standalone
 gem.
 
-Here is example for [SDL](http://www.kmc.gr.jp/)~ohai/index.en.html:
+Here is example for [SDL](http://www.kmc.gr.jp/~ohai/index.en.html):
 
 ```ruby
 require 'opengl'
