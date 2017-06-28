@@ -2,53 +2,53 @@
 layout: default
 ---
 
-h1. Usage Tutorial
+# Usage Tutorial
 
 This page should serve as tutorial and also as reference to Ruby bindings for OpenGL
 language. It is assumed that you have basic understanding of both OpenGL and Ruby.
 
-If you are new to OpenGL, you can start by visiting "OpenGL homepage":http://www.opengl.org, reading the "OpenGL Programming Guide":http://opengl.org/documentation/books/#the_opengl_programming_guide_the_official_guide_to_learning_opengl_version (also known as Red Book) or going to "NeHe's tutorials page":http://nehe.gamedev.net/.
+If you are new to OpenGL, you can start by visiting [OpenGL homepage](http://www.opengl.org), reading the [OpenGL Programming Guide](http://opengl.org/documentation/books/#the_opengl_programming_guide_the_official_guide_to_learning_opengl_version) (also known as Red Book) or going to [NeHe's tutorials page](http://nehe.gamedev.net/).
 
-If you are new to Ruby, "the ruby-lang website":http://www.ruby-lang.org/en/documentation/ contains lots of
+If you are new to Ruby, [the ruby-lang website](http://www.ruby-lang.org/en/documentation/) contains lots of
 documentation and manuals for Ruby.
 
 *Note:* While older gem versions packaged GLU and GLUT together with OpenGL, they are
 now standalone libraries.
 
-h1. Table of Contents
+# Table of Contents
 
 Basics:
-* "Naming Conventions":#naming_conventions
-* "Function parameters":#function_parameters
-* "Return values":#return_values
-* "Matrices":#matrices
-* "Textures and other raw data":#textures
-* "Error Checking":#error_checking
-* "Examples":#examples
+* [Naming Conventions](#naming_conventions)
+* [Function parameters](#function_parameters)
+* [Return values](#return_values)
+* [Matrices](#matrices)
+* [Textures and other raw data](#textures)
+* [Error Checking](#error_checking)
+* [Examples](#examples)
 
 Advanced stuff:
-* "OpenGL version and Extensions":#extensions
-* "Selection and Feedback queries":#selection_feedback
-* "Vertex Arrays":#vertex_arrays
-* "Buffer Objects":#buffer_objects
-* "GLUT, SDL, GLFW..":#glut_sdl
-* "GLUT callbacks":#glut_callbacks
-* "Internals":#internals
+* [OpenGL version and Extensions](#extensions)
+* [Selection and Feedback queries](#selection_feedback)
+* [Vertex Arrays](#vertex_arrays)
+* [Buffer Objects](#buffer_objects)
+* [GLUT, SDL, GLFW..](#glut_sdl)
+* [GLUT callbacks](#glut_callbacks)
+* [Internals](#internals)
 
 API reference:
 * TODO
 
-h2(#naming_conventions). Naming conventions
+## <a name="naming_conventions"></a> Naming conventions
 
 You can import opengl by calling:
 
-{% highlight ruby %}
+```ruby
 require 'opengl'
-{% endhighlight %}
+```
 
 The functions and constants are named the same as their C counterparts:
 
-{% highlight ruby %}
+```ruby
 require 'opengl'
 require 'glu'
 require 'glut'
@@ -56,14 +56,14 @@ require 'glut'
 Gl.glFooBar( Gl::GL_FOO_BAR )
 Glu.gluFooBar( Glu::GLU_FOO_BAR )
 Glut.glutFooBar( Glut::GLUT_FOO_BAR )
-{% endhighlight %}
+```
 
 This is the 'full' syntax, useful when you are expecting name clashes
 with other modules, or just want to be formal ;) More often, you will
 want to use the 'C-style' syntax, which you can accomplish by using @include@
 to export the module functions and constants to global namespace:
 
-{% highlight ruby %}
+```ruby
 require 'opengl'
 require 'glu'
 require 'glut'
@@ -72,11 +72,11 @@ include Gl,Glu,Glut
 glFooBar( GL_FOO_BAR )
 gluFooBar( GLU_FOO_BAR )
 glutFooBar( GLUT_FOO_BAR )
-{% endhighlight %}
+```
 
 Finally, you can use the 'old' syntax:
 
-{% highlight ruby %}
+```ruby
 require 'opengl'
 require 'glu'
 require 'glut'
@@ -86,7 +86,7 @@ require 'glut'
 GL.FooBar( GL::FOO_BAR )
 GLU.FooBar( GLU::FOO_BAR )
 GLUT.FooBar( GLUT::FOO_BAR )
-{% endhighlight %}
+```
 
 This syntax was used by previous opengl gem versions; some people also
 consider it as being more in the spirit of OO programming. It has one
@@ -99,56 +99,56 @@ so it's up to you which one you choose to use.
 
 The rest of this tutorial will use the C syntax.
 
-h2. Calling syntax
+## Calling syntax
 
-h3(#function_parameters). Function parameters
+### <a name="function_parameters"></a> Function parameters
 
 For most types the ruby syntax follows the C API. If needed, ruby will do
 automatic parameter conversion to required type if possible. Example:
 
-{% highlight ruby %}
+```ruby
 glVertex3f( 1.0, 1.0, 1.0 )  # matches C syntax
 glVertex3f( 1, 1, 1 )        # equivalent to the above
 glVertex3f( "string", 1, 1 ) # raises TypeError exception
-{% endhighlight %}
+```
 
 Arrays are passed/received as Ruby arrays:
 
-{% highlight ruby %}
+```ruby
 vertex = [ 1, 1, 1 ]
 glVertex3fv( vertex )
-{% endhighlight %}
+```
 
 For functions with multiple parameter-number variations (glVertex, glColor...)
 we define 'overloaded' functions, as in:
 
-{% highlight ruby %}
+```ruby
 glVertexf( 1, 1 )       # will call glVertex2f()
 glVertexf( 1, 1, 1 )    # will call glVertex3f()
 glVertexf( 1, 1, 1, 1 ) # will call glVertex4f()
 glVertexi( 1, 1 )       # will call glVertex2i()
 # ... and so on
-{% endhighlight %}
+```
 
-h3(#return_values). Return values
+### <a name="return_values"></a> Return values
 
 In C, OpenGL functions rarely return values directly, instead you pass in pointer to
 preallocated buffer and they will fill it with values; sometimes you have to even query
 how big buffer you'll need to allocate. Ruby does this all for you, returning either single
 value or array:
 
-{% highlight ruby %}
+```ruby
 glColor4f( 1.0, 1.0, 1.0, 1.0 )
 # ...
 color = glGetDoublev(GL_CURRENT_COLOR)
 p color # will be [1.0,1.0,1.0,1.0]
-{% endhighlight %}
+```
 
-h3(#matrices). Matrices
+### <a name="matrices"></a> Matrices
 
 Matrices are passed and received as ruby array, or as ruby Matrix objects:
 
-{% highlight ruby %}
+```ruby
 matrix_a = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 matrix_b = [ [  0, 1, 2, 3 ],
              [  4, 5, 6, 7 ],
@@ -162,7 +162,7 @@ matrix_c = Matrix.rows( [ [  0, 1, 2, 3 ],
 glLoadMatrixf(matrix_a)
 glLoadMatrixf(matrix_b) 
 glLoadMatrixf(matrix_c) # same result
-{% endhighlight %}
+```
 
 You may also create your own matrix class and pass it this way, provided that it
 is convertible to array (has @to_a@ method).
@@ -171,14 +171,14 @@ Note that as OpenGL uses column-major
 notation for matrices, you may need to call transpose() when working with
 row-major matrices or arrays in ruby.
 
-h3(#textures). Textures and other raw data
+### <a name="textures"></a> Textures and other raw data
 
 Data for textures, arrays, buffers etc. can be specified either as ruby arrays or directly as raw packed strings -
 strings that contains their direct memory representation (just like C arrays). If you need to convert between
 ruby arrays and these strings, use ruby @Array#pack@ and @String#unpack@ functions.
 Example:
 
-{% highlight ruby %}
+```ruby
 # create texture, 2x2 pixels,
 # 3 components (R,G,B) for each pixel as floats
 texture = [
@@ -202,11 +202,11 @@ glTexImage2D(
   GL_FLOAT,      # component type - floats
   data           # the packed data
 )
-{% endhighlight %}
+```
 
 Reverse works just the same:
 
-{% highlight ruby %}
+```ruby
 # ...
 data = glGetTexImage( # returns the packed data as string
   GL_TEXTURE_2D, # target
@@ -217,26 +217,26 @@ data = glGetTexImage( # returns the packed data as string
 # now convert it to ruby array
 texture = data.unpack("f*")
 #...
-{% endhighlight %}
+```
 
 For storage, packed strings are more memory efficient than ruby arrays, but
 cannot be easily changed or manipulated.
 
-h3(#error_checking). Error Checking
+### <a name="error_checking"></a> Error Checking
 
 Starting with version 0.60.0, opengl performs automatic checking of OpenGL and GLU errors.
 Functions:
 
-{% highlight ruby %}
+```ruby
 Gl.enable_error_checking
 Gl.disable_error_checking
 Gl.is_error_checking_enabled? # true/false
-{% endhighlight %}
+```
 
 When the checking is enabled (default), @glGetError()@ is executed after each OpenGL call, and should error
 occur, Gl::Error exception is raised:
 
-{% highlight ruby %}
+```ruby
 Gl.enable_error_checking
 ...
 begin 
@@ -251,7 +251,7 @@ rescue Gl::Error => err
   end
   ...
 end
-{% endhighlight %}
+```
 
 Some GLU functions may also throw Glu::Error - the handling is the same as above.
 
@@ -259,13 +259,13 @@ It is usually good idea to leave error checking on for all your code, as OpenGL 
 unexpected places. For now there is no measurable performance hit for error checking, although this may depend
 on your graphic drivers implementation.
 
-h3(#examples). Examples
+### <a name="examples"></a> Examples
 
 Various examples are in 'examples' directory of the bindings. To run them, manually pass them to ruby like:
 
-{% highlight sh %}
+```sh
 ruby some_sample.rb
-{% endhighlight %}
+```
 
 On windows, you may want to use @rubyw@ instead, which displays the standard output window
 as some examples use the console for usage info etc.
@@ -273,23 +273,23 @@ as some examples use the console for usage info etc.
 If you get 'opengl not found' error, and you installed ruby-opengl from gems, your
 shell or ruby installation is probably not configured to use the gems; in that case type:
 
-{% highlight sh %}
+```sh
 ruby -rubygems some_sample.rb
-{% endhighlight %}
+```
 
 The `README` file in the `examples` directory contains some notes on the examples.
 
-h3(#extensions). OpenGL Version and Extensions 
+### <a name="extensions"></a> OpenGL Version and Extensions 
 
 To query for available OpenGL version or OpenGL extension, use Gl.is_available? function:
 
-{% highlight ruby %}
+```ruby
 # true if OpenGL version is 2.0 or later is available
 Gl.is_available?(2.0)
 ...
 # returns true if GL_ARB_shadow is available on this system
 Gl.is_available?("GL_ARB_shadow")
-{% endhighlight %}
+```
 
 For list of what extensions are supported in ruby-opengl see this [page](extensions.html)
 
@@ -298,13 +298,13 @@ promoted to ARB or even to OpenGL core, retaining their function names just with
 or removed. However sometimes the functions semantics was changed in the process, so to avoid
 confusion, ruby-opengl bindings will strictly adhere to the C naming, e.g. :
 
-{% highlight ruby %}
+```ruby
 # will call the function from GL_ARB_transpose_matrix extension
 glLoadTransposeMatrixfARB(matrix)
 ...
 # will call the function from OpenGL 1.3
 glLoadTransposeMatrixf(matrix)
-{% endhighlight %}
+```
 
 *Note:* opengl is compiled against OpenGL 1.1, and all functions and enums from later
 versions of OpenGL and from extensions are loaded dynamically at runtime. That means that all
@@ -312,11 +312,11 @@ of OpenGL 2.1 and supported extensions are available even if the ruby-opengl bin
 compiled on platform which lacks proper libraries or headers (like for example Windows without
 installed graphic drivers). This should ease binary-only distribution and application packaging.
 
-h3(#selection_feedback). Selection/Feedback queries
+### <a name="selection_feedback"></a> Selection/Feedback queries
 
 Querying selection and feedback is different from C. Example:
 
-{% highlight ruby %}
+```ruby
 # this will create selection buffer 512*sizeof(GLuint) long
 buf = glselectbuffer(512)
 # enter feedback mode
@@ -330,32 +330,32 @@ count = glRenderMode(GL_RENDER)
 data = buf.unpack("I*") # I for unsigned integer
 # also, next call to glRenderMode(GL_SELECT) will overwrite
 # the 'buf' buffer with new data
-{% endhighlight %}
+```
 
 The feedback query follows the same pattern, only the data are stored
 as floats.
 
-h3(#vertex_arrays). Vertex Arrays
+### <a name="vertex_arrays"></a> Vertex Arrays
 
 In current state, vertex arrays are not very efficient in ruby-opengl, as it is not possible to change
 the array content once it is specified, and there is overhead for converting between ruby and C representation
 of numbers. Using display lists for static and immediate mode for dynamic objects is recommended instead.
 
-You can specify the data the same way as "texture data":#textures. Example:
+You can specify the data the same way as [texture data](#textures). Example:
 
-{% highlight ruby %}
+```ruby
 normals = [0,1,0, 1,0,0, 1,1,1]
 glNormalPointer(GL_FLOAT,0,normals)
 ...
 glEnable(GL_NORMAL_ARRAY)
 glDrawArrays(...)
 ...
-{% endhighlight %}
+```
 
 This applies to all *pointer functions. glGetPointerv will return reference to the frozen string
 previously specified.
 
-h3. Buffer Objects
+### Buffer Objects
 
 Once again, in current state buffer objects (VBOs in particular) are not very efficient in ruby-opengl.
 Unlike textures and vertex arrays, the data for buffers *must* be prepacked by using .pack() function,
@@ -368,7 +368,7 @@ last argument (so in ruby they take one extra argument), and will write the data
 
 VBO example:
 
-{% highlight ruby %}
+```ruby
 # specify 3 vertices, 2*float each
 data = [0,0, 0,1, 1,1].pack("f*")
 # ...
@@ -387,9 +387,9 @@ glVertexPointer(2,GL_FLOAT,0,0)
 # ...
 glEnableClientState(GL_VERTEX_ARRAY)
 # ...
-{% endhighlight %}
+```
 
-h3(#glut_sdl). GLUT, SDL, GLFW..
+### <a name="glut_sdl"></a> GLUT, SDL, GLFW..
 
 When it comes to low-level task like GL window creation, input and event handling, the usual
 first choice is GLUT, as it is readilly available alongside OpenGL. However both GLUT itself
@@ -400,9 +400,9 @@ ruby bindings for them).
 *Note:* Older gem versions packaged GLUT with the opengl gem, however it is now a standalone
 gem.
 
-Here is example for "SDL":http://www.kmc.gr.jp/~ohai/index.en.html:
+Here is example for [SDL](http://www.kmc.gr.jp/)~ohai/index.en.html:
 
-{% highlight ruby %}
+```ruby
 require 'opengl'
 require 'sdl'
 # init
@@ -414,11 +414,11 @@ Gl.glVertex3f(1.0,0.0,0.0)
 # ...
 SDL.GLSwapBuffers()
 # ...
-{% endhighlight %}
+```
 
-and another example for "GLFW":http://ruby-glfw.rubyforge.org/:
+and another example for [GLFW](http://ruby-glfw.rubyforge.org/:)
 
-{% highlight ruby %}
+```ruby
 require 'opengl'
 require 'glfw'
 # init
@@ -428,30 +428,30 @@ Gl.glVertex3f(1.0,0.0,0.0)
 # ...
 Glfw.glfwSwapBuffers()
 # ...
-{% endhighlight %}
+```
 
-h3(#glut_callbacks). GLUT callbacks
+### <a name="glut_callbacks"></a> GLUT callbacks
 
 The GLUT callback functions are specified as Proc objects, which you can
 either create with lambda as:
 
-{% highlight ruby %}
+```ruby
 reshape = lambda do |w, h|
   # ...
 end
 # ...
 glutReshapeFunc( reshape )
-{% endhighlight %}
+```
 
 or by conversion from normal functions:
 
-{% highlight ruby %}
+```ruby
 def reshape(w,h)
   # ...
 end
 # ...
 glutReshapeFunc( method("reshape").to_proc )
-{% endhighlight %}
+```
 
 Note: An older notation you'll see instead of @lambda@ is @proc@. The
 PickAxe v2 notes that @proc@ is "mildly deprecated" in favor of @lambda@.
@@ -459,7 +459,7 @@ You'll also sometimes see @Proc.new@ used in place of either. Pages 359-360 of
 PickAxe v2 describe the differences between using @lambda@ and @Proc.new@,
 but for our purposes either will be fine.
 
-h3(#internals). Internals
+### <a name="internals"></a> Internals
 
 The directory structure follows current Ruby standards, with a few
 extra directories added.
