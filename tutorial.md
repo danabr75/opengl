@@ -60,7 +60,7 @@ Glut.glutFooBar( Glut::GLUT_FOO_BAR )
 
 This is the 'full' syntax, useful when you are expecting name clashes
 with other modules, or just want to be formal ;) More often, you will
-want to use the 'C-style' syntax, which you can accomplish by using @include@
+want to use the 'C-style' syntax, which you can accomplish by using `include`
 to export the module functions and constants to global namespace:
 
 ```ruby
@@ -165,7 +165,7 @@ glLoadMatrixf(matrix_c) # same result
 ```
 
 You may also create your own matrix class and pass it this way, provided that it
-is convertible to array (has @to_a@ method).
+is convertible to array (has `to_a` method).
 
 Note that as OpenGL uses column-major
 notation for matrices, you may need to call transpose() when working with
@@ -175,7 +175,7 @@ row-major matrices or arrays in ruby.
 
 Data for textures, arrays, buffers etc. can be specified either as ruby arrays or directly as raw packed strings -
 strings that contains their direct memory representation (just like C arrays). If you need to convert between
-ruby arrays and these strings, use ruby @Array#pack@ and @String#unpack@ functions.
+ruby arrays and these strings, use ruby `Array#pack` and `String#unpack` functions.
 Example:
 
 ```ruby
@@ -233,7 +233,7 @@ Gl.disable_error_checking
 Gl.is_error_checking_enabled? # true/false
 ```
 
-When the checking is enabled (default), @glGetError()@ is executed after each OpenGL call, and should error
+When the checking is enabled (default), `glGetError()` is executed after each OpenGL call, and should error
 occur, Gl::Error exception is raised:
 
 ```ruby
@@ -267,7 +267,7 @@ Various examples are in 'examples' directory of the bindings. To run them, manua
 ruby some_sample.rb
 ```
 
-On windows, you may want to use @rubyw@ instead, which displays the standard output window
+On windows, you may want to use `rubyw` instead, which displays the standard output window
 as some examples use the console for usage info etc.
 
 If you get 'opengl not found' error, and you installed ruby-opengl from gems, your
@@ -453,10 +453,10 @@ end
 glutReshapeFunc( method("reshape").to_proc )
 ```
 
-Note: An older notation you'll see instead of @lambda@ is @proc@. The
-PickAxe v2 notes that @proc@ is "mildly deprecated" in favor of @lambda@.
-You'll also sometimes see @Proc.new@ used in place of either. Pages 359-360 of
-PickAxe v2 describe the differences between using @lambda@ and @Proc.new@,
+Note: An older notation you'll see instead of `lambda` is `proc`. The
+PickAxe v2 notes that `proc` is "mildly deprecated" in favor of `lambda`.
+You'll also sometimes see `Proc.new` used in place of either. Pages 359-360 of
+PickAxe v2 describe the differences between using `lambda` and `Proc.new`,
 but for our purposes either will be fine.
 
 ### <a name="internals"></a> Internals
