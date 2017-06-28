@@ -2,9 +2,9 @@
 layout: default
 ---
 
-h1. Project history
+# Project history
 
-The "original ruby-opengl":http://www2.giganet.net/~yoshi/ was written
+The [original ruby-opengl](http://www2.giganet.net/~yoshi/) was written
 by Yoshi.
 
 James A. desperately wanted to get the OpenGL Ruby bindings working on his Mac,
@@ -75,31 +75,31 @@ modernized the library. In 2012 Lars K. took over.
 The opengl gem 0.70 and 0.80 was released in February 2013. ruby-opengl now
 forwards to the opengl gem.
 
-"glut":https://github.com/archSeer/glut and "glu":https://github.com/archSeer/glu
+[glut](https://github.com/archSeer/glut) and [glu](https://github.com/archSeer/glu)
 were split from the opengl into separate gems in March 2013.
 
-h2. Thank you
+## Thank you
 
 Aside from big thank-you's to the core devs, special thanks also goes to:
 
 * Bill Kelly -- provided some pilot code changing how users can call method and constant names.
 * Ilmari Heikkinen -- provided code for changing how users can call method and constant names.
-* "James Adam":https://github.com/lazyatom -- Mac OS X fixes
+* [James Adam](https://github.com/lazyatom) -- Mac OS X fixes
 * Tony Hursh -- Mac OS X glut build tweak
 * Sean Long -- More Mac OS X fixes
-* "John Gabriele":https://github.com/uvtc -- Numerous fixes, documentation, and project support
+* [John Gabriele](https://github.com/uvtc) -- Numerous fixes, documentation, and project support
 * Ronald Pijnacker -- Windows support and bugfixes
 * **Yoshi** -- providing ruby-opengl-0.32g from which to work off of.
 
 Original ruby-opengl committers:
 
-* "Allain Hoang":https://github.com/hoanga
-* "Peter McLain":https://github.com/pbm -- SWIG wrapper, commits 2006-2007
-* "Vo Minh Thu":https://github.com/noteed
-* "Jan Dvorak":https://rubygems.org/profiles/snoutmate -- Responsible for most of the commits 2007-2009
+* [Allain Hoang](https://github.com/hoanga)
+* [Peter McLain](https://github.com/pbm) -- SWIG wrapper, commits 2006-2007
+* [Vo Minh Thu](https://github.com/noteed)
+* [Jan Dvorak](https://rubygems.org/profiles/snoutmate) -- Responsible for most of the commits 2007-2009
 
 New era:
 
-* "Eric Hodel":https://github.com/drbrain -- 2011-2012 commits, fixes, modernization, examples
-* "Lars Kanis":https://github.com/larskanis
-* "Blaž Hrastnik":https://github.com/archSeer
+* [Eric Hodel](https://github.com/drbrain) -- 2011-2012 commits, fixes, modernization, examples
+* [Lars Kanis](https://github.com/larskanis)
+* [Blaž Hrastnik](https://github.com/archSeer)
