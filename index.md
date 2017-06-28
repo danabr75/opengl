@@ -30,12 +30,17 @@ require 'opengl'
 gem install opengl
 ```
 
+## Getting started
+Please have a look at the [Ruby OpenGL tutorial](opengl/tutorial.html)
+
 ## Developers
 
 After checking out the source, run:
 
 ```sh
 $ bundle install
+$ rake compile test
 ```
 
-This task will install any missing dependencies.
+This will install any missing dependencies, build the Ruby C extension and run all tests.
+Not all tests succeed on all graphic cards.
