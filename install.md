@@ -2,11 +2,11 @@
 layout: default
 ---
 
-h1. Building opengl
+# Building opengl
 
-h2. Pre-requisites
+## Pre-requisites
 
-h3. General
+### General
 
 * C compiler (not needed for binary install on Windows)
 * ruby 1.9.2+
@@ -20,92 +20,92 @@ The main goal is having ruby installed and being capable of compiling
 native C extensions for ruby (ruby-dev), as well as having the required
 OpenGL libraries.
 
-h3. Linux
+### Linux
 
 On Ubuntu or Debian systems, aside from Ruby you'll need the 'developer' package
-@ruby1.9-dev@, which supports compiling C extensions for ruby.
+`ruby-dev`, which supports compiling C extensions for ruby.
 
 For OpenGL related headers you'll need the following packages:
 
-* @libgl1-mesa-dri@/@libgl1-mesa-dev@ -- opengl
-* @libglu1-mesa@/@libglu1-mesa-dev@ -- glu
-* @freeglut3@/@freeglut3-dev@ -- (free)glut
+* `libgl1-mesa-dri libgl1-mesa-dev` -- opengl
+* `libglu1-mesa libglu1-mesa-dev` -- glu
+* `freeglut3 freeglut3-dev` -- (free)glut
 
-On some distributions you may need the @xorg-dev@ developer package.
+On some distributions you may need the `xorg-dev` developer package.
 
 h4. ArchLinux
 
-{% highlight sh %}
+```sh
 $ pacman -S mesa glu freeglut
-{% endhighlight %}
+```
 
-h3. Mac OS X
+### Mac OS X
 
 On OS X, you will need to install your own version of Ruby as the
 version that ships with OS X has known problems with properly building
 ruby-opengl bindings.  You'll also need XCode for gcc and tools.
 
-h3. Windows
+### Windows
 
 For manual build on Windows you need to have platform SDK and compiler that *must* match the one which was used for compiling ruby binary (for One-click ruby installer it is MSVC 6.0).
 
-If ruby was installed via the one-click installer, the "DevKit":http://rubyinstaller.org/add-ons/devkit/
+If ruby was installed via the one-click installer, the [DevKit](http://rubyinstaller.org/add-ons/devkit/)
 is also needed (for compiling native C extensions).
 
-h2. Build and installation
+## Build and installation
 
 
-h3. Installing as a gem
+### Installing as a gem
 
 opengl should support being installed via gems now.  Just do 
-@gem install opengl@ and it should pull down the gem
+`gem install opengl` and it should pull down the gem
 and try to build the bindings for you automatically.
 
 For windows there is also pre-built binary windows gem available
 (i386-mswin32) which is compatible with the ruby one-click installer and does not need
 compiler or other mentioned tools installed.
 
-h3. Manual Build instructions for all platforms (see above for platform-specific notes)
+### Manual Build instructions for all platforms (see above for platform-specific notes)
 
-# Make sure you have working ruby with rubygems installed
-   and (if needed) appropriate developer packages (ruby-dev, ruby1.9-dev, ...)
-# Make sure you have a working C compiler
-# Install rake  by running @gem install rake@
-# Make sure you have working OpenGL installation, this includes libGL, libGLU,
-   glut and (if needed) appropriate -dev or -devel packages.
-# Run @rake@ in the root directory of the project
-# (OPTIONAL) Run @rake test@ to run unit tests to verify it works properly
+* Make sure you have working ruby with rubygems installed
+  and (if needed) appropriate developer packages (ruby-dev, ruby1.9-dev, ...)
+* Make sure you have a working C compiler
+* Install rake  by running `gem install rake`
+* Make sure you have working OpenGL installation, this includes libGL, libGLU,
+  glut and (if needed) appropriate -dev or -devel packages.
+* Run `rake` in the root directory of the project
+* (OPTIONAL) Run `rake test` to run unit tests to verify it works properly
 
-h3. Installing manually built extensions
+### Installing manually built extensions
 
-# @rake clean@ to clean out the project
-# @rake gem@ to create source gem from project
-# @gem install pkg/ruby-opengl-(version).gem@ to compile and install the gem
-# Done.
+* `rake clean` to clean out the project
+* `rake gem` to create source gem from project
+* `gem install pkg/ruby-opengl-(version).gem` to compile and install the gem
+* Done.
 
-h3. Building binary gem (useful only for binary distribution of the project)
+### Building binary gem (useful only for binary distribution of the project)
 
-# Run @rake binary_gem@
-# Binary gem will be generated in *pkg/* directory
+* Run `rake binary_gem`
+* Binary gem will be generated in *pkg/* directory
 
-h3. Testing
+### Testing
 
 To run unit tests:
 
-{% highlight sh %}
+```sh
 $ rake test
-{% endhighlight %}
+```
 
 Note that the tests have the adverse effect of testing the underlying OpenGL
 implementation, so depending on your GL provider, drivers or OS, the tests may
 fail, crash, or not run at all, without affecting your ability to use the
 bindings.
 
-h3. Running programs and examples
+### Running programs and examples
 
 To run a sample file, make sure the ruby-opengl gem is installed then:
 
-{% highlight sh %}
+```sh
 $ cd examples
 $ ruby -rubygems plane.rb
-{% endhighlight %}
+```
