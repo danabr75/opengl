@@ -31,7 +31,7 @@ gem install opengl
 ```
 
 ## Getting started
-Please have a look at the [Ruby OpenGL tutorial](opengl/tutorial.html)
+Please have a look at the [Ruby OpenGL tutorial](tutorial.html)
 
 ## Developers
 
