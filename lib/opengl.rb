@@ -40,10 +40,16 @@ module Gl
 
   meths.each do |mn|
     define_singleton_method(mn) do |*args,&block|
-      implementation.send(mn, *args, &block)
+      begin
+        implementation.send(mn, *args, &block)
+      rescue
+      end
     end
     define_method(mn) do |*args,&block|
-      implementation.send(mn, *args, &block)
+      begin
+        implementation.send(mn, *args, &block)
+      rescue
+      end
     end
     private mn
   end
