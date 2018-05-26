@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email = ["drbrain@segment7.net", "lars@greiz-reinsdorf.de", "blaz@mxxn.io", "", "", "", ""]
   spec.summary = "An OpenGL wrapper for Ruby"
   spec.description = "PATCHED FOR WINDOWS: An OpenGL wrapper for Ruby. opengl contains bindings for OpenGL.\n\nBe sure to check out\n{GLU}[https://github.com/larskanis/glu] and\n{GLUT}[https://github.com/larskanis/glut]\ngems."
-  spec.homepage = "N/A"
+  spec.homepage = "https://github.com/larskanis/opengl"
   spec.license       = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0") +
