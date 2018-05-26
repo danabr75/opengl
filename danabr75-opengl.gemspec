@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'opengl/bindings_version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "opengl"
+  spec.name          = "danabr75-opengl"
   spec.version       = Gl::BINDINGS_VERSION
   spec.authors = ["Eric Hodel", "Lars Kanis", "Bla\u{17e} Hrastnik", "Alain Hoang", "Jan Dvorak", "Minh Thu Vo", "James Adam"]
   spec.email = ["drbrain@segment7.net", "lars@greiz-reinsdorf.de", "blaz@mxxn.io", "", "", "", ""]
   spec.summary = "An OpenGL wrapper for Ruby"
-  spec.description = "An OpenGL wrapper for Ruby. opengl contains bindings for OpenGL.\n\nBe sure to check out\n{GLU}[https://github.com/larskanis/glu] and\n{GLUT}[https://github.com/larskanis/glut]\ngems."
-  spec.homepage = "https://github.com/larskanis/opengl"
+  spec.description = "PATCHED FOR WINDOWS: An OpenGL wrapper for Ruby. opengl contains bindings for OpenGL.\n\nBe sure to check out\n{GLU}[https://github.com/larskanis/glu] and\n{GLUT}[https://github.com/larskanis/glut]\ngems."
+  spec.homepage = "N/A"
   spec.license       = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0") +

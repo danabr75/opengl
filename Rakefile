@@ -81,7 +81,8 @@ class OpenglGemHelper < Bundler::GemHelper
   end
 end
 
-spec = Gem::Specification.load('opengl.gemspec')
+# spec = Gem::Specification.load('opengl.gemspec')
+spec = Gem::Specification.load('danabr75-opengl')
 
 Rake::ExtensionTask.new 'opengl', spec do |ext|
   ext.lib_dir = 'lib/opengl'
